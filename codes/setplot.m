@@ -5,9 +5,9 @@ set(gca,'fontWeight','bold','FontSize',14) % bold ticks
 set(gca,'TickDir','out')
 
 set(gcf,'paperunits','centimeters');
-set(gcf,'paperposition', [5 5 12 10]); % left bottom width height
+set(gcf,'paperposition', [5 5 20 6]); % left bottom width height
 set(gca,'ticklength',[0.02 0.01])
-set(gca,'box','on')
+%set(gca,'box','on')
 set(gca,'LineWidth',2)
 
 if s==1

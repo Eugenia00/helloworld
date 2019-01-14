@@ -1,0 +1,46 @@
+%% T steps nedded to reach brightness value
+
+files = dir('output\Im_L800every*.mat');
+
+x = 10^(-3)*[1,10,50,100];
+jump = [1,10,50,100];
+%x = zeros(1,numel(files));
+step = 1;
+
+    
+for i = 2:numel(files)
+    steps = jump(i):jump(i):10000;%size(out,3);
+    e_m = zeros(numel(files),numel(steps) );
+    name = files(i).name;
+    %x(i) = str2double(name(5:end-4));
+    out = load(['output\' name]);
+    out = out.Im_mic_tot;
+        
+    h=0;
+    for j = 1:numel(steps);
+        h = h+1;
+        
+        fprintf('-- %d -- \n',j)
+        
+        v = var(out(:,:,1:h),0,3);
+        m = mean(out(:,:,1:h),3);
+
+        e = (v-m)./m;
+        e_m(i,j/step) = mean(e(:));
+        
+    end
+    
+       
+end
+%%
+cmap = winter(numel(files));
+figure(4)
+for i = 2: numel(files)
+    plot((1:numel(e_m(i,:))*x(i)),e_m(i,:)./800,'.-','Markersize',15,'Linewidth',2,'color',cmap(i,:))
+    hold on
+end
+ylim([0,0.35])
+xlab = xlabel('time (seconds)');
+ylab = ylabel('\epsilon/\lambda');
+%legend({'10','20','50','100','300','600','1200','2400'},'Location','Southeast')
+setplot(xlab,ylab,0,'output\Ntstep')

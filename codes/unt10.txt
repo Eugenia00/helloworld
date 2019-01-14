@@ -1,0 +1,49 @@
+for i =1:1:100
+    disp(i)
+    
+    d = poisson_eu(100,i*50^2);
+    d = reshape(d,50^2,i);
+    m = mean(d,2);
+    v = var(d,0,2);
+    e1 = v./m;
+    ee(i) = mean(e1);
+    
+end
+%%
+maxt = 1000;
+x = [1:maxt];
+t = x.*10^(-3);
+plot(t,co_b(1:maxt)./co_b(1),'.-r','MarkerSize',15)
+hold on
+plot(t,co_b_m(1:maxt)./co_b_m(1),'.-r','MarkerSize',15)
+
+plot(t,co_f(1:maxt)./co_f(1),'.-g')
+plot(t,co_f_m(1:maxt)./co_f_m(1),'.-g','MarkerSize',15)
+set(gca,'Xscale','log')
+%%
+
+ylim([-0.2 1.5])
+ylab = ylabel('G(\tau)');
+xlab = xlabel('time steps');
+hold on
+setplot(xlab,ylab,0,'output\corr_10-3')
+
+%% 
+maxt = 1000;
+x = [1:maxt];
+t = x.*10^(-3);
+
+figure
+plot(t,co_f(1:maxt),'.-g','MarkerSize',15)
+hold on
+
+maxt = 1000;
+x = [1:maxt];
+t = x.*10^(-2);
+plot(t,co(1:maxt),'.-b','MarkerSize',15)
+%%
+ylab = ylabel('G(\tau)');
+xlab = xlabel('time (seconds)');
+hold on
+setplot(xlab,ylab,1,'output\corr_10-3_10-2')
+
